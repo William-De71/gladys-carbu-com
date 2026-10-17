@@ -1,0 +1,2814 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "Carbu.com",
+  "description": {
+    "en": "Fuel prices in Belgium, France and Luxembourg: cheapest stations and maximum prices.",
+    "fr": "Prix des carburants en Belgique, France et Luxembourg : stations moins chères, prix maximums.",
+    "de": "Kraftstoffpreise in Belgien, Frankreich, Luxemburg: günstigste Tankstellen und Höchstpreise.",
+    "es": "Precios del carburante en Bélgica, Francia y Luxemburgo: gasolineras baratas y precios máximos."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-carbu-com:0.1.0",
+  "gladys_version": ">=5.1.1",
+  "categories": ["energy", "services"],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-carbu-com/main/cover.jpg",
+  "transports": ["cloud"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Carbu.com",
+        "fr": "Carbu.com",
+        "de": "Carbu.com",
+        "es": "Carbu.com"
+      },
+      "description": {
+        "en": "The prices come from Carbu.com, the fuel price comparator of Belgium, France and Luxembourg, where drivers and stations update them. No account is needed: the integration reads the public pages of Carbu.com for your postal code, once an hour by default. Your postal code leaves your network; nothing else does.",
+        "fr": "Les prix viennent de Carbu.com, le comparateur de prix des carburants de Belgique, de France et du Luxembourg, mis à jour par les automobilistes et les stations. Aucun compte n’est nécessaire : l’intégration lit les pages publiques de Carbu.com pour votre code postal, une fois par heure par défaut. Seul votre code postal quitte votre réseau.",
+        "de": "Die Preise stammen von Carbu.com, dem Kraftstoffpreisvergleich für Belgien, Frankreich und Luxemburg, den Autofahrer und Tankstellen aktualisieren. Kein Konto nötig: Die Integration liest die öffentlichen Seiten von Carbu.com für Ihre Postleitzahl, standardmäßig einmal pro Stunde. Nur Ihre Postleitzahl verlässt Ihr Netzwerk.",
+        "es": "Los precios proceden de Carbu.com, el comparador de precios del carburante de Bélgica, Francia y Luxemburgo, que actualizan conductores y gasolineras. No hace falta cuenta: la integración lee las páginas públicas de Carbu.com para su código postal, una vez por hora por defecto. Solo su código postal sale de su red."
+      },
+      "links": [
+        {
+          "url": "https://carbu.com/belgique/",
+          "label": {
+            "en": "Carbu.com Belgium",
+            "fr": "Carbu.com Belgique",
+            "de": "Carbu.com Belgien",
+            "es": "Carbu.com Bélgica"
+          }
+        },
+        {
+          "url": "https://carbu.com/france/",
+          "label": {
+            "en": "Carbu.com France",
+            "fr": "Carbu.com France",
+            "de": "Carbu.com Frankreich",
+            "es": "Carbu.com Francia"
+          }
+        },
+        {
+          "url": "https://carbu.com/luxembourg/",
+          "label": {
+            "en": "Carbu.com Luxembourg",
+            "fr": "Carbu.com Luxembourg",
+            "de": "Carbu.com Luxemburg",
+            "es": "Carbu.com Luxemburgo"
+          }
+        }
+      ]
+    },
+    {
+      "key": "country",
+      "type": "select",
+      "display": "radio",
+      "label": {
+        "en": "Country",
+        "fr": "Pays",
+        "de": "Land",
+        "es": "País"
+      },
+      "options": [
+        {
+          "value": "BE",
+          "label": {
+            "en": "Belgium",
+            "fr": "Belgique",
+            "de": "Belgien",
+            "es": "Bélgica"
+          }
+        },
+        {
+          "value": "FR",
+          "label": {
+            "en": "France",
+            "fr": "France",
+            "de": "Frankreich",
+            "es": "Francia"
+          }
+        },
+        {
+          "value": "LU",
+          "label": {
+            "en": "Luxembourg",
+            "fr": "Luxembourg",
+            "de": "Luxemburg",
+            "es": "Luxemburgo"
+          }
+        }
+      ],
+      "default": "BE",
+      "required": true
+    },
+    {
+      "key": "postal_code",
+      "type": "string",
+      "label": {
+        "en": "Postal code",
+        "fr": "Code postal",
+        "de": "Postleitzahl",
+        "es": "Código postal"
+      },
+      "description": {
+        "en": "The centre of the area: the stations are counted from the centre of this locality.",
+        "fr": "Le centre de la zone : les distances sont comptées depuis le centre de cette localité.",
+        "de": "Die Mitte des Gebiets: Entfernungen werden ab der Mitte dieses Orts gemessen.",
+        "es": "El centro de la zona: las distancias se cuentan desde el centro de esta localidad."
+      },
+      "placeholder": {
+        "en": "4000",
+        "fr": "4000",
+        "de": "4000",
+        "es": "4000"
+      },
+      "required": true
+    },
+    {
+      "key": "town",
+      "type": "string",
+      "label": {
+        "en": "Locality (optional)",
+        "fr": "Localité (facultatif)",
+        "de": "Ort (optional)",
+        "es": "Localidad (opcional)"
+      },
+      "description": {
+        "en": "When the postal code covers several localities (4000: Liège, Glain, Rocourt). Empty: the main one. “Test the connection” lists them.",
+        "fr": "Quand le code postal couvre plusieurs localités (4000 : Liège, Glain, Rocourt). Vide : la principale. « Tester la connexion » les liste.",
+        "de": "Wenn die Postleitzahl mehrere Orte umfasst (4000: Liège, Glain, Rocourt). Leer: der Hauptort. „Verbindung testen“ listet sie auf.",
+        "es": "Cuando el código postal abarca varias localidades (4000: Lieja, Glain, Rocourt). Vacío: la principal. «Probar la conexión» las enumera."
+      },
+      "placeholder": {
+        "en": "Liège",
+        "fr": "Liège",
+        "de": "Liège",
+        "es": "Liège"
+      },
+      "required": false
+    },
+    {
+      "key": "fuels",
+      "type": "multi_select",
+      "label": {
+        "en": "Fuels",
+        "fr": "Carburants",
+        "de": "Kraftstoffe",
+        "es": "Carburantes"
+      },
+      "description": {
+        "en": "Up to four fuels. The countries where Carbu.com lists each fuel follow its name.",
+        "fr": "Quatre carburants au plus. Les pays où Carbu.com référence chaque carburant suivent son nom.",
+        "de": "Bis zu vier Kraftstoffe. Hinter dem Namen stehen die Länder, in denen Carbu.com ihn führt.",
+        "es": "Hasta cuatro carburantes. Tras el nombre figuran los países donde Carbu.com lo ofrece."
+      },
+      "options": [
+        {
+          "value": "sp95_e10",
+          "label": {
+            "en": "Super 95 (E10) · BE FR",
+            "fr": "Super 95 (E10) · BE FR",
+            "de": "Super E10 · BE FR",
+            "es": "Gasolina 95 (E10) · BE FR"
+          }
+        },
+        {
+          "value": "sp95_e5",
+          "label": {
+            "en": "Super 95 (E5) · FR LU",
+            "fr": "Sans plomb 95 (E5) · FR LU",
+            "de": "Super E5 · FR LU",
+            "es": "Gasolina 95 (E5) · FR LU"
+          }
+        },
+        {
+          "value": "sp98_e5",
+          "label": {
+            "en": "Super 98 (E5) · BE FR LU",
+            "fr": "Super 98 (E5) · BE FR LU",
+            "de": "Super Plus 98 (E5) · BE FR LU",
+            "es": "Gasolina 98 (E5) · BE FR LU"
+          }
+        },
+        {
+          "value": "sp98_e10",
+          "label": {
+            "en": "Super 98 (E10) · BE FR LU",
+            "fr": "Super 98 (E10) · BE FR LU",
+            "de": "Super Plus 98 (E10) · BE FR LU",
+            "es": "Gasolina 98 (E10) · BE FR LU"
+          }
+        },
+        {
+          "value": "diesel_b7",
+          "label": {
+            "en": "Diesel (B7) · BE FR LU",
+            "fr": "Diesel (B7) · BE FR LU",
+            "de": "Diesel (B7) · BE FR LU",
+            "es": "Diésel (B7) · BE FR LU"
+          }
+        },
+        {
+          "value": "diesel_b10",
+          "label": {
+            "en": "Diesel (B10) · BE LU",
+            "fr": "Diesel (B10) · BE LU",
+            "de": "Diesel (B10) · BE LU",
+            "es": "Diésel (B10) · BE LU"
+          }
+        },
+        {
+          "value": "diesel_xtl",
+          "label": {
+            "en": "Diesel XTL / HVO · BE",
+            "fr": "Diesel XTL / HVO · BE",
+            "de": "Diesel XTL / HVO · BE",
+            "es": "Diésel XTL / HVO · BE"
+          }
+        },
+        {
+          "value": "diesel_plus",
+          "label": {
+            "en": "Premium diesel · BE LU",
+            "fr": "Diesel+ · BE LU",
+            "de": "Premium-Diesel · BE LU",
+            "es": "Diésel prémium · BE LU"
+          }
+        },
+        {
+          "value": "lpg",
+          "label": {
+            "en": "LPG · BE FR LU",
+            "fr": "GPL · BE FR LU",
+            "de": "Autogas (LPG) · BE FR LU",
+            "es": "GLP · BE FR LU"
+          }
+        },
+        {
+          "value": "cng",
+          "label": {
+            "en": "CNG · BE FR LU",
+            "fr": "GNV (CNG) · BE FR LU",
+            "de": "Erdgas (CNG) · BE FR LU",
+            "es": "GNC · BE FR LU"
+          }
+        },
+        {
+          "value": "e85",
+          "label": {
+            "en": "E85 · FR",
+            "fr": "Superéthanol E85 · FR",
+            "de": "E85 · FR",
+            "es": "E85 · FR"
+          }
+        }
+      ],
+      "default": ["diesel_b7"],
+      "required": true
+    },
+    {
+      "key": "filters",
+      "type": "section",
+      "label": {
+        "en": "Stations taken into account",
+        "fr": "Stations prises en compte",
+        "de": "Berücksichtigte Tankstellen",
+        "es": "Gasolineras consideradas"
+      },
+      "description": {
+        "en": "Carbu.com lists up to 100 stations around the locality, some prices several months old. These settings keep the ones that matter.",
+        "fr": "Carbu.com liste jusqu’à 100 stations autour de la localité, dont certains prix datent de plusieurs mois. Ces réglages gardent celles qui comptent.",
+        "de": "Carbu.com listet bis zu 100 Tankstellen um den Ort, manche Preise sind Monate alt. Diese Einstellungen behalten die relevanten.",
+        "es": "Carbu.com muestra hasta 100 gasolineras alrededor de la localidad, algunas con precios de hace meses. Estos ajustes conservan las que importan."
+      }
+    },
+    {
+      "key": "radius",
+      "type": "select",
+      "label": {
+        "en": "Radius",
+        "fr": "Rayon",
+        "de": "Umkreis",
+        "es": "Radio"
+      },
+      "options": [
+        {
+          "value": "2",
+          "label": {
+            "en": "2 km",
+            "fr": "2 km",
+            "de": "2 km",
+            "es": "2 km"
+          }
+        },
+        {
+          "value": "5",
+          "label": {
+            "en": "5 km",
+            "fr": "5 km",
+            "de": "5 km",
+            "es": "5 km"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "en": "10 km",
+            "fr": "10 km",
+            "de": "10 km",
+            "es": "10 km"
+          }
+        },
+        {
+          "value": "15",
+          "label": {
+            "en": "15 km",
+            "fr": "15 km",
+            "de": "15 km",
+            "es": "15 km"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "en": "20 km",
+            "fr": "20 km",
+            "de": "20 km",
+            "es": "20 km"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "en": "30 km",
+            "fr": "30 km",
+            "de": "30 km",
+            "es": "30 km"
+          }
+        }
+      ],
+      "default": "10",
+      "required": false
+    },
+    {
+      "key": "max_age",
+      "type": "select",
+      "label": {
+        "en": "Ignore prices older than",
+        "fr": "Ignorer les prix plus anciens que",
+        "de": "Preise ignorieren, die älter sind als",
+        "es": "Ignorar precios con más de"
+      },
+      "options": [
+        {
+          "value": "1",
+          "label": {
+            "en": "1 day",
+            "fr": "1 jour",
+            "de": "1 Tag",
+            "es": "1 día"
+          }
+        },
+        {
+          "value": "2",
+          "label": {
+            "en": "2 days",
+            "fr": "2 jours",
+            "de": "2 Tage",
+            "es": "2 días"
+          }
+        },
+        {
+          "value": "3",
+          "label": {
+            "en": "3 days",
+            "fr": "3 jours",
+            "de": "3 Tage",
+            "es": "3 días"
+          }
+        },
+        {
+          "value": "7",
+          "label": {
+            "en": "7 days",
+            "fr": "7 jours",
+            "de": "7 Tage",
+            "es": "7 días"
+          }
+        },
+        {
+          "value": "14",
+          "label": {
+            "en": "14 days",
+            "fr": "14 jours",
+            "de": "14 Tage",
+            "es": "14 días"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "en": "30 days",
+            "fr": "30 jours",
+            "de": "30 Tage",
+            "es": "30 días"
+          }
+        }
+      ],
+      "default": "7",
+      "required": false
+    },
+    {
+      "key": "stations",
+      "type": "select",
+      "label": {
+        "en": "Stations offered in Discovery",
+        "fr": "Stations proposées dans la découverte",
+        "de": "In der Erkennung angebotene Tankstellen",
+        "es": "Gasolineras propuestas en el descubrimiento"
+      },
+      "description": {
+        "en": "The cheapest stations of each fuel, to add as devices and follow their prices.",
+        "fr": "Les stations les moins chères de chaque carburant, à ajouter comme appareils pour suivre leurs prix.",
+        "de": "Die günstigsten Tankstellen je Kraftstoff, als Geräte hinzuzufügen, um ihre Preise zu verfolgen.",
+        "es": "Las gasolineras más baratas de cada carburante, para añadirlas como dispositivos y seguir sus precios."
+      },
+      "options": [
+        {
+          "value": "0",
+          "label": {
+            "en": "None",
+            "fr": "Aucune",
+            "de": "Keine",
+            "es": "Ninguna"
+          }
+        },
+        {
+          "value": "3",
+          "label": {
+            "en": "3 per fuel",
+            "fr": "3 par carburant",
+            "de": "3 pro Kraftstoff",
+            "es": "3 por carburante"
+          }
+        },
+        {
+          "value": "5",
+          "label": {
+            "en": "5 per fuel",
+            "fr": "5 par carburant",
+            "de": "5 pro Kraftstoff",
+            "es": "5 por carburante"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "en": "10 per fuel",
+            "fr": "10 par carburant",
+            "de": "10 pro Kraftstoff",
+            "es": "10 por carburante"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "en": "20 per fuel",
+            "fr": "20 par carburant",
+            "de": "20 pro Kraftstoff",
+            "es": "20 por carburante"
+          }
+        }
+      ],
+      "default": "5",
+      "required": false
+    },
+    {
+      "key": "interval",
+      "type": "select",
+      "label": {
+        "en": "Reading interval",
+        "fr": "Fréquence de lecture",
+        "de": "Leseintervall",
+        "es": "Frecuencia de lectura"
+      },
+      "options": [
+        {
+          "value": "30",
+          "label": {
+            "en": "30 minutes",
+            "fr": "30 minutes",
+            "de": "30 Minuten",
+            "es": "30 minutos"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "en": "1 hour",
+            "fr": "1 heure",
+            "de": "1 Stunde",
+            "es": "1 hora"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "en": "2 hours",
+            "fr": "2 heures",
+            "de": "2 Stunden",
+            "es": "2 horas"
+          }
+        },
+        {
+          "value": "240",
+          "label": {
+            "en": "4 hours",
+            "fr": "4 heures",
+            "de": "4 Stunden",
+            "es": "4 horas"
+          }
+        }
+      ],
+      "default": "60",
+      "required": false
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of device names",
+        "fr": "Langue des noms d’appareils",
+        "de": "Sprache der Gerätenamen",
+        "es": "Idioma de los nombres de dispositivos"
+      },
+      "description": {
+        "en": "Automatic: the language of the dashboard, French until a widget is shown.",
+        "fr": "Automatique : la langue du tableau de bord, le français tant qu’aucun widget n’est affiché.",
+        "de": "Automatisch: die Sprache des Dashboards, Französisch, bis ein Widget angezeigt wird.",
+        "es": "Automático: el idioma del panel, francés hasta que se muestre un widget."
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ],
+      "default": "auto",
+      "required": false
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "description": {
+        "en": "Finds the locality of the postal code, reads the prices now and sums them up.",
+        "fr": "Retrouve la localité du code postal, lit les prix tout de suite et les résume.",
+        "de": "Ermittelt den Ort der Postleitzahl, liest die Preise sofort und fasst sie zusammen.",
+        "es": "Busca la localidad del código postal, lee los precios ahora y los resume."
+      },
+      "timeout_seconds": 90
+    },
+    {
+      "key": "diagnostic",
+      "label": {
+        "en": "Diagnostic",
+        "fr": "Diagnostic",
+        "de": "Diagnose",
+        "es": "Diagnóstico"
+      },
+      "description": {
+        "en": "Writes the state of the integration to its logs, to attach to an issue.",
+        "fr": "Écrit l’état de l’intégration dans ses journaux, à joindre à un ticket.",
+        "de": "Schreibt den Zustand der Integration in ihre Protokolle, für eine Fehlermeldung.",
+        "es": "Escribe el estado de la integración en sus registros, para adjuntarlo a una incidencia."
+      },
+      "timeout_seconds": 30
+    }
+  ],
+  "widgets": [
+    {
+      "key": "cheapest_stations",
+      "label": {
+        "en": "Cheapest fuel",
+        "fr": "Carburant moins cher",
+        "de": "Günstigster Kraftstoff",
+        "es": "Carburante más barato"
+      },
+      "description": {
+        "en": "The cheapest stations around you for a fuel, with their prices.",
+        "fr": "Les stations les moins chères autour de chez vous pour un carburant.",
+        "de": "Die günstigsten Tankstellen in Ihrer Nähe für einen Kraftstoff.",
+        "es": "Las gasolineras más baratas cerca de usted para un carburante."
+      },
+      "icon": "droplet",
+      "settings": [
+        {
+          "key": "fuel",
+          "type": "select",
+          "label": {
+            "en": "Fuel",
+            "fr": "Carburant",
+            "de": "Kraftstoff",
+            "es": "Carburante"
+          },
+          "options": [
+            {
+              "value": "sp95_e10",
+              "label": {
+                "en": "Super 95 (E10) · BE FR",
+                "fr": "Super 95 (E10) · BE FR",
+                "de": "Super E10 · BE FR",
+                "es": "Gasolina 95 (E10) · BE FR"
+              }
+            },
+            {
+              "value": "sp95_e5",
+              "label": {
+                "en": "Super 95 (E5) · FR LU",
+                "fr": "Sans plomb 95 (E5) · FR LU",
+                "de": "Super E5 · FR LU",
+                "es": "Gasolina 95 (E5) · FR LU"
+              }
+            },
+            {
+              "value": "sp98_e5",
+              "label": {
+                "en": "Super 98 (E5) · BE FR LU",
+                "fr": "Super 98 (E5) · BE FR LU",
+                "de": "Super Plus 98 (E5) · BE FR LU",
+                "es": "Gasolina 98 (E5) · BE FR LU"
+              }
+            },
+            {
+              "value": "sp98_e10",
+              "label": {
+                "en": "Super 98 (E10) · BE FR LU",
+                "fr": "Super 98 (E10) · BE FR LU",
+                "de": "Super Plus 98 (E10) · BE FR LU",
+                "es": "Gasolina 98 (E10) · BE FR LU"
+              }
+            },
+            {
+              "value": "diesel_b7",
+              "label": {
+                "en": "Diesel (B7) · BE FR LU",
+                "fr": "Diesel (B7) · BE FR LU",
+                "de": "Diesel (B7) · BE FR LU",
+                "es": "Diésel (B7) · BE FR LU"
+              }
+            },
+            {
+              "value": "diesel_b10",
+              "label": {
+                "en": "Diesel (B10) · BE LU",
+                "fr": "Diesel (B10) · BE LU",
+                "de": "Diesel (B10) · BE LU",
+                "es": "Diésel (B10) · BE LU"
+              }
+            },
+            {
+              "value": "diesel_xtl",
+              "label": {
+                "en": "Diesel XTL / HVO · BE",
+                "fr": "Diesel XTL / HVO · BE",
+                "de": "Diesel XTL / HVO · BE",
+                "es": "Diésel XTL / HVO · BE"
+              }
+            },
+            {
+              "value": "diesel_plus",
+              "label": {
+                "en": "Premium diesel · BE LU",
+                "fr": "Diesel+ · BE LU",
+                "de": "Premium-Diesel · BE LU",
+                "es": "Diésel prémium · BE LU"
+              }
+            },
+            {
+              "value": "lpg",
+              "label": {
+                "en": "LPG · BE FR LU",
+                "fr": "GPL · BE FR LU",
+                "de": "Autogas (LPG) · BE FR LU",
+                "es": "GLP · BE FR LU"
+              }
+            },
+            {
+              "value": "cng",
+              "label": {
+                "en": "CNG · BE FR LU",
+                "fr": "GNV (CNG) · BE FR LU",
+                "de": "Erdgas (CNG) · BE FR LU",
+                "es": "GNC · BE FR LU"
+              }
+            },
+            {
+              "value": "e85",
+              "label": {
+                "en": "E85 · FR",
+                "fr": "Superéthanol E85 · FR",
+                "de": "E85 · FR",
+                "es": "E85 · FR"
+              }
+            }
+          ],
+          "required": false,
+          "description": {
+            "en": "Empty: the first followed fuel.",
+            "fr": "Vide : le premier carburant suivi.",
+            "de": "Leer: der erste verfolgte Kraftstoff.",
+            "es": "Vacío: el primer carburante seguido."
+          }
+        },
+        {
+          "key": "count",
+          "type": "number",
+          "label": {
+            "en": "Stations shown",
+            "fr": "Stations affichées",
+            "de": "Angezeigte Tankstellen",
+            "es": "Gasolineras mostradas"
+          },
+          "min": 1,
+          "max": 8,
+          "default": 5,
+          "required": false
+        }
+      ]
+    },
+    {
+      "key": "price_trend",
+      "label": {
+        "en": "Fuel price trend",
+        "fr": "Évolution du prix",
+        "de": "Kraftstoffpreis-Verlauf",
+        "es": "Evolución del precio"
+      },
+      "description": {
+        "en": "The lowest and average prices of a fuel over time.",
+        "fr": "Les prix le plus bas et moyen d’un carburant dans le temps.",
+        "de": "Niedrigster und durchschnittlicher Preis eines Kraftstoffs im Zeitverlauf.",
+        "es": "Los precios más bajo y medio de un carburante a lo largo del tiempo."
+      },
+      "icon": "trending-down",
+      "settings": [
+        {
+          "key": "fuel",
+          "type": "select",
+          "label": {
+            "en": "Fuel",
+            "fr": "Carburant",
+            "de": "Kraftstoff",
+            "es": "Carburante"
+          },
+          "options": [
+            {
+              "value": "sp95_e10",
+              "label": {
+                "en": "Super 95 (E10) · BE FR",
+                "fr": "Super 95 (E10) · BE FR",
+                "de": "Super E10 · BE FR",
+                "es": "Gasolina 95 (E10) · BE FR"
+              }
+            },
+            {
+              "value": "sp95_e5",
+              "label": {
+                "en": "Super 95 (E5) · FR LU",
+                "fr": "Sans plomb 95 (E5) · FR LU",
+                "de": "Super E5 · FR LU",
+                "es": "Gasolina 95 (E5) · FR LU"
+              }
+            },
+            {
+              "value": "sp98_e5",
+              "label": {
+                "en": "Super 98 (E5) · BE FR LU",
+                "fr": "Super 98 (E5) · BE FR LU",
+                "de": "Super Plus 98 (E5) · BE FR LU",
+                "es": "Gasolina 98 (E5) · BE FR LU"
+              }
+            },
+            {
+              "value": "sp98_e10",
+              "label": {
+                "en": "Super 98 (E10) · BE FR LU",
+                "fr": "Super 98 (E10) · BE FR LU",
+                "de": "Super Plus 98 (E10) · BE FR LU",
+                "es": "Gasolina 98 (E10) · BE FR LU"
+              }
+            },
+            {
+              "value": "diesel_b7",
+              "label": {
+                "en": "Diesel (B7) · BE FR LU",
+                "fr": "Diesel (B7) · BE FR LU",
+                "de": "Diesel (B7) · BE FR LU",
+                "es": "Diésel (B7) · BE FR LU"
+              }
+            },
+            {
+              "value": "diesel_b10",
+              "label": {
+                "en": "Diesel (B10) · BE LU",
+                "fr": "Diesel (B10) · BE LU",
+                "de": "Diesel (B10) · BE LU",
+                "es": "Diésel (B10) · BE LU"
+              }
+            },
+            {
+              "value": "diesel_xtl",
+              "label": {
+                "en": "Diesel XTL / HVO · BE",
+                "fr": "Diesel XTL / HVO · BE",
+                "de": "Diesel XTL / HVO · BE",
+                "es": "Diésel XTL / HVO · BE"
+              }
+            },
+            {
+              "value": "diesel_plus",
+              "label": {
+                "en": "Premium diesel · BE LU",
+                "fr": "Diesel+ · BE LU",
+                "de": "Premium-Diesel · BE LU",
+                "es": "Diésel prémium · BE LU"
+              }
+            },
+            {
+              "value": "lpg",
+              "label": {
+                "en": "LPG · BE FR LU",
+                "fr": "GPL · BE FR LU",
+                "de": "Autogas (LPG) · BE FR LU",
+                "es": "GLP · BE FR LU"
+              }
+            },
+            {
+              "value": "cng",
+              "label": {
+                "en": "CNG · BE FR LU",
+                "fr": "GNV (CNG) · BE FR LU",
+                "de": "Erdgas (CNG) · BE FR LU",
+                "es": "GNC · BE FR LU"
+              }
+            },
+            {
+              "value": "e85",
+              "label": {
+                "en": "E85 · FR",
+                "fr": "Superéthanol E85 · FR",
+                "de": "E85 · FR",
+                "es": "E85 · FR"
+              }
+            }
+          ],
+          "required": false,
+          "description": {
+            "en": "Empty: the first followed fuel.",
+            "fr": "Vide : le premier carburant suivi.",
+            "de": "Leer: der erste verfolgte Kraftstoff.",
+            "es": "Vacío: el primer carburante seguido."
+          }
+        },
+        {
+          "key": "interval",
+          "type": "select",
+          "label": {
+            "en": "Period",
+            "fr": "Période",
+            "de": "Zeitraum",
+            "es": "Periodo"
+          },
+          "options": [
+            {
+              "value": "last-week",
+              "label": {
+                "en": "Last week",
+                "fr": "Dernière semaine",
+                "de": "Letzte Woche",
+                "es": "Última semana"
+              }
+            },
+            {
+              "value": "last-month",
+              "label": {
+                "en": "Last month",
+                "fr": "Dernier mois",
+                "de": "Letzter Monat",
+                "es": "Último mes"
+              }
+            },
+            {
+              "value": "last-three-months",
+              "label": {
+                "en": "Last three months",
+                "fr": "Trois derniers mois",
+                "de": "Letzte drei Monate",
+                "es": "Últimos tres meses"
+              }
+            },
+            {
+              "value": "last-year",
+              "label": {
+                "en": "Last year",
+                "fr": "Dernière année",
+                "de": "Letztes Jahr",
+                "es": "Último año"
+              }
+            }
+          ],
+          "default": "last-month",
+          "required": false
+        }
+      ]
+    },
+    {
+      "key": "official_prices",
+      "label": {
+        "en": "Official fuel prices",
+        "fr": "Prix officiels carburants",
+        "de": "Amtliche Kraftstoffpreise",
+        "es": "Precios oficiales"
+      },
+      "description": {
+        "en": "Belgian maximum prices and what comes next; Luxembourg official prices.",
+        "fr": "Prix maximums belges et leur évolution ; prix officiels luxembourgeois.",
+        "de": "Belgische Höchstpreise und ihre Entwicklung; amtliche Preise Luxemburgs.",
+        "es": "Precios máximos belgas y su evolución; precios oficiales de Luxemburgo."
+      },
+      "icon": "tag",
+      "settings": [
+        {
+          "key": "fuels",
+          "type": "multi_select",
+          "label": {
+            "en": "Fuels",
+            "fr": "Carburants",
+            "de": "Kraftstoffe",
+            "es": "Carburantes"
+          },
+          "description": {
+            "en": "Empty: the followed fuels, or all of them.",
+            "fr": "Vide : les carburants suivis, ou tous.",
+            "de": "Leer: die verfolgten Kraftstoffe oder alle.",
+            "es": "Vacío: los carburantes seguidos, o todos."
+          },
+          "options": [
+            {
+              "value": "sp95_e10",
+              "label": {
+                "en": "Super 95 (E10)",
+                "fr": "Super 95 (E10)",
+                "de": "Super E10",
+                "es": "Gasolina 95 (E10)"
+              }
+            },
+            {
+              "value": "sp95_e5",
+              "label": {
+                "en": "Super 95 (E5)",
+                "fr": "Sans plomb 95 (E5)",
+                "de": "Super E5",
+                "es": "Gasolina 95 (E5)"
+              }
+            },
+            {
+              "value": "sp98_e5",
+              "label": {
+                "en": "Super 98 (E5)",
+                "fr": "Super 98 (E5)",
+                "de": "Super Plus 98 (E5)",
+                "es": "Gasolina 98 (E5)"
+              }
+            },
+            {
+              "value": "sp98_e10",
+              "label": {
+                "en": "Super 98 (E10)",
+                "fr": "Super 98 (E10)",
+                "de": "Super Plus 98 (E10)",
+                "es": "Gasolina 98 (E10)"
+              }
+            },
+            {
+              "value": "diesel_b7",
+              "label": {
+                "en": "Diesel (B7)",
+                "fr": "Diesel (B7)",
+                "de": "Diesel (B7)",
+                "es": "Diésel (B7)"
+              }
+            },
+            {
+              "value": "diesel_b10",
+              "label": {
+                "en": "Diesel (B10)",
+                "fr": "Diesel (B10)",
+                "de": "Diesel (B10)",
+                "es": "Diésel (B10)"
+              }
+            },
+            {
+              "value": "diesel_xtl",
+              "label": {
+                "en": "Diesel XTL / HVO",
+                "fr": "Diesel XTL / HVO",
+                "de": "Diesel XTL / HVO",
+                "es": "Diésel XTL / HVO"
+              }
+            },
+            {
+              "value": "lpg",
+              "label": {
+                "en": "LPG",
+                "fr": "GPL",
+                "de": "Autogas (LPG)",
+                "es": "GLP"
+              }
+            }
+          ],
+          "required": false
+        }
+      ]
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "cheapest_station_changed",
+      "label": {
+        "en": "Carbu.com: new cheapest station",
+        "fr": "Carbu.com : nouvelle station la moins chère",
+        "de": "Carbu.com: neue günstigste Tankstelle",
+        "es": "Carbu.com: nueva gasolinera más barata"
+      },
+      "description": {
+        "en": "Another station becomes the cheapest of your area for a fuel.",
+        "fr": "Une autre station devient la moins chère de votre zone pour un carburant.",
+        "de": "Eine andere Tankstelle wird in Ihrem Gebiet die günstigste für einen Kraftstoff.",
+        "es": "Otra gasolinera pasa a ser la más barata de su zona para un carburante."
+      },
+      "fields": [
+        {
+          "key": "fuel",
+          "type": "select",
+          "label": {
+            "en": "Fuel",
+            "fr": "Carburant",
+            "de": "Kraftstoff",
+            "es": "Carburante"
+          },
+          "options": [
+            {
+              "value": "sp95_e10",
+              "label": {
+                "en": "Super 95 (E10) · BE FR",
+                "fr": "Super 95 (E10) · BE FR",
+                "de": "Super E10 · BE FR",
+                "es": "Gasolina 95 (E10) · BE FR"
+              }
+            },
+            {
+              "value": "sp95_e5",
+              "label": {
+                "en": "Super 95 (E5) · FR LU",
+                "fr": "Sans plomb 95 (E5) · FR LU",
+                "de": "Super E5 · FR LU",
+                "es": "Gasolina 95 (E5) · FR LU"
+              }
+            },
+            {
+              "value": "sp98_e5",
+              "label": {
+                "en": "Super 98 (E5) · BE FR LU",
+                "fr": "Super 98 (E5) · BE FR LU",
+                "de": "Super Plus 98 (E5) · BE FR LU",
+                "es": "Gasolina 98 (E5) · BE FR LU"
+              }
+            },
+            {
+              "value": "sp98_e10",
+              "label": {
+                "en": "Super 98 (E10) · BE FR LU",
+                "fr": "Super 98 (E10) · BE FR LU",
+                "de": "Super Plus 98 (E10) · BE FR LU",
+                "es": "Gasolina 98 (E10) · BE FR LU"
+              }
+            },
+            {
+              "value": "diesel_b7",
+              "label": {
+                "en": "Diesel (B7) · BE FR LU",
+                "fr": "Diesel (B7) · BE FR LU",
+                "de": "Diesel (B7) · BE FR LU",
+                "es": "Diésel (B7) · BE FR LU"
+              }
+            },
+            {
+              "value": "diesel_b10",
+              "label": {
+                "en": "Diesel (B10) · BE LU",
+                "fr": "Diesel (B10) · BE LU",
+                "de": "Diesel (B10) · BE LU",
+                "es": "Diésel (B10) · BE LU"
+              }
+            },
+            {
+              "value": "diesel_xtl",
+              "label": {
+                "en": "Diesel XTL / HVO · BE",
+                "fr": "Diesel XTL / HVO · BE",
+                "de": "Diesel XTL / HVO · BE",
+                "es": "Diésel XTL / HVO · BE"
+              }
+            },
+            {
+              "value": "diesel_plus",
+              "label": {
+                "en": "Premium diesel · BE LU",
+                "fr": "Diesel+ · BE LU",
+                "de": "Premium-Diesel · BE LU",
+                "es": "Diésel prémium · BE LU"
+              }
+            },
+            {
+              "value": "lpg",
+              "label": {
+                "en": "LPG · BE FR LU",
+                "fr": "GPL · BE FR LU",
+                "de": "Autogas (LPG) · BE FR LU",
+                "es": "GLP · BE FR LU"
+              }
+            },
+            {
+              "value": "cng",
+              "label": {
+                "en": "CNG · BE FR LU",
+                "fr": "GNV (CNG) · BE FR LU",
+                "de": "Erdgas (CNG) · BE FR LU",
+                "es": "GNC · BE FR LU"
+              }
+            },
+            {
+              "value": "e85",
+              "label": {
+                "en": "E85 · FR",
+                "fr": "Superéthanol E85 · FR",
+                "de": "E85 · FR",
+                "es": "E85 · FR"
+              }
+            }
+          ],
+          "required": false,
+          "description": {
+            "en": "Leave empty for any fuel.",
+            "fr": "Laissez vide pour tous les carburants.",
+            "de": "Leer lassen für jeden Kraftstoff.",
+            "es": "Déjelo vacío para cualquier carburante."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "fuel",
+          "type": "string",
+          "label": {
+            "en": "Fuel (key)",
+            "fr": "Carburant (clé)",
+            "de": "Kraftstoff (Schlüssel)",
+            "es": "Carburante (clave)"
+          },
+          "description": {
+            "en": "diesel_b7, sp95_e10, lpg…",
+            "fr": "diesel_b7, sp95_e10, lpg…",
+            "de": "diesel_b7, sp95_e10, lpg…",
+            "es": "diesel_b7, sp95_e10, lpg…"
+          }
+        },
+        {
+          "key": "fuel_name",
+          "type": "string",
+          "label": {
+            "en": "Fuel name",
+            "fr": "Nom du carburant",
+            "de": "Name des Kraftstoffs",
+            "es": "Nombre del carburante"
+          },
+          "description": {
+            "en": "In English: “Diesel (B7)”.",
+            "fr": "En anglais : « Diesel (B7) ».",
+            "de": "Auf Englisch: „Diesel (B7)“.",
+            "es": "En inglés: «Diesel (B7)»."
+          }
+        },
+        {
+          "key": "station_name",
+          "type": "string",
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Tankstelle",
+            "es": "Gasolinera"
+          }
+        },
+        {
+          "key": "brand",
+          "type": "string",
+          "label": {
+            "en": "Brand",
+            "fr": "Enseigne",
+            "de": "Marke",
+            "es": "Marca"
+          }
+        },
+        {
+          "key": "address",
+          "type": "string",
+          "label": {
+            "en": "Address",
+            "fr": "Adresse",
+            "de": "Adresse",
+            "es": "Dirección"
+          }
+        },
+        {
+          "key": "price",
+          "type": "number",
+          "label": {
+            "en": "Price (€/L)",
+            "fr": "Prix (€/L)",
+            "de": "Preis (€/L)",
+            "es": "Precio (€/L)"
+          }
+        },
+        {
+          "key": "distance_km",
+          "type": "number",
+          "label": {
+            "en": "Distance from the locality centre (km)",
+            "fr": "Distance du centre de la localité (km)",
+            "de": "Entfernung vom Ortszentrum (km)",
+            "es": "Distancia al centro de la localidad (km)"
+          }
+        },
+        {
+          "key": "price_date",
+          "type": "string",
+          "label": {
+            "en": "Date of the price (YYYY-MM-DD)",
+            "fr": "Date du prix (AAAA-MM-JJ)",
+            "de": "Datum des Preises (JJJJ-MM-TT)",
+            "es": "Fecha del precio (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "map_url",
+          "type": "string",
+          "label": {
+            "en": "Map link",
+            "fr": "Lien vers la carte",
+            "de": "Kartenlink",
+            "es": "Enlace al mapa"
+          }
+        },
+        {
+          "key": "station_url",
+          "type": "string",
+          "label": {
+            "en": "Carbu.com page",
+            "fr": "Page Carbu.com",
+            "de": "Carbu.com-Seite",
+            "es": "Página de Carbu.com"
+          }
+        },
+        {
+          "key": "average_price",
+          "type": "number",
+          "label": {
+            "en": "Average price of the area (€/L)",
+            "fr": "Prix moyen de la zone (€/L)",
+            "de": "Durchschnittspreis des Gebiets (€/L)",
+            "es": "Precio medio de la zona (€/L)"
+          }
+        },
+        {
+          "key": "previous_station_name",
+          "type": "string",
+          "label": {
+            "en": "Previous cheapest station",
+            "fr": "Station la moins chère précédente",
+            "de": "Bisher günstigste Tankstelle",
+            "es": "Gasolinera más barata anterior"
+          }
+        },
+        {
+          "key": "previous_price",
+          "type": "number",
+          "label": {
+            "en": "Previous price (€/L)",
+            "fr": "Prix précédent (€/L)",
+            "de": "Vorheriger Preis (€/L)",
+            "es": "Precio anterior (€/L)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "station_price_changed",
+      "label": {
+        "en": "Carbu.com: price changed at a station",
+        "fr": "Carbu.com : prix modifié dans une station",
+        "de": "Carbu.com: Preisänderung an einer Tankstelle",
+        "es": "Carbu.com: cambio de precio en una gasolinera"
+      },
+      "description": {
+        "en": "The price of a fuel changes at a station you added as a device.",
+        "fr": "Le prix d’un carburant change dans une station ajoutée comme appareil.",
+        "de": "Der Preis eines Kraftstoffs ändert sich an einer als Gerät hinzugefügten Tankstelle.",
+        "es": "El precio de un carburante cambia en una gasolinera añadida como dispositivo."
+      },
+      "fields": [
+        {
+          "key": "station",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Tankstelle",
+            "es": "Gasolinera"
+          },
+          "description": {
+            "en": "A station device of the integration. Leave empty for any station.",
+            "fr": "Un appareil station de l’intégration. Laissez vide pour toutes les stations.",
+            "de": "Ein Tankstellen-Gerät der Integration. Leer lassen für jede Tankstelle.",
+            "es": "Un dispositivo de gasolinera de la integración. Déjelo vacío para cualquiera."
+          },
+          "required": false
+        },
+        {
+          "key": "fuel",
+          "type": "select",
+          "label": {
+            "en": "Fuel",
+            "fr": "Carburant",
+            "de": "Kraftstoff",
+            "es": "Carburante"
+          },
+          "options": [
+            {
+              "value": "sp95_e10",
+              "label": {
+                "en": "Super 95 (E10) · BE FR",
+                "fr": "Super 95 (E10) · BE FR",
+                "de": "Super E10 · BE FR",
+                "es": "Gasolina 95 (E10) · BE FR"
+              }
+            },
+            {
+              "value": "sp95_e5",
+              "label": {
+                "en": "Super 95 (E5) · FR LU",
+                "fr": "Sans plomb 95 (E5) · FR LU",
+                "de": "Super E5 · FR LU",
+                "es": "Gasolina 95 (E5) · FR LU"
+              }
+            },
+            {
+              "value": "sp98_e5",
+              "label": {
+                "en": "Super 98 (E5) · BE FR LU",
+                "fr": "Super 98 (E5) · BE FR LU",
+                "de": "Super Plus 98 (E5) · BE FR LU",
+                "es": "Gasolina 98 (E5) · BE FR LU"
+              }
+            },
+            {
+              "value": "sp98_e10",
+              "label": {
+                "en": "Super 98 (E10) · BE FR LU",
+                "fr": "Super 98 (E10) · BE FR LU",
+                "de": "Super Plus 98 (E10) · BE FR LU",
+                "es": "Gasolina 98 (E10) · BE FR LU"
+              }
+            },
+            {
+              "value": "diesel_b7",
+              "label": {
+                "en": "Diesel (B7) · BE FR LU",
+                "fr": "Diesel (B7) · BE FR LU",
+                "de": "Diesel (B7) · BE FR LU",
+                "es": "Diésel (B7) · BE FR LU"
+              }
+            },
+            {
+              "value": "diesel_b10",
+              "label": {
+                "en": "Diesel (B10) · BE LU",
+                "fr": "Diesel (B10) · BE LU",
+                "de": "Diesel (B10) · BE LU",
+                "es": "Diésel (B10) · BE LU"
+              }
+            },
+            {
+              "value": "diesel_xtl",
+              "label": {
+                "en": "Diesel XTL / HVO · BE",
+                "fr": "Diesel XTL / HVO · BE",
+                "de": "Diesel XTL / HVO · BE",
+                "es": "Diésel XTL / HVO · BE"
+              }
+            },
+            {
+              "value": "diesel_plus",
+              "label": {
+                "en": "Premium diesel · BE LU",
+                "fr": "Diesel+ · BE LU",
+                "de": "Premium-Diesel · BE LU",
+                "es": "Diésel prémium · BE LU"
+              }
+            },
+            {
+              "value": "lpg",
+              "label": {
+                "en": "LPG · BE FR LU",
+                "fr": "GPL · BE FR LU",
+                "de": "Autogas (LPG) · BE FR LU",
+                "es": "GLP · BE FR LU"
+              }
+            },
+            {
+              "value": "cng",
+              "label": {
+                "en": "CNG · BE FR LU",
+                "fr": "GNV (CNG) · BE FR LU",
+                "de": "Erdgas (CNG) · BE FR LU",
+                "es": "GNC · BE FR LU"
+              }
+            },
+            {
+              "value": "e85",
+              "label": {
+                "en": "E85 · FR",
+                "fr": "Superéthanol E85 · FR",
+                "de": "E85 · FR",
+                "es": "E85 · FR"
+              }
+            }
+          ],
+          "required": false,
+          "description": {
+            "en": "Leave empty for any fuel.",
+            "fr": "Laissez vide pour tous les carburants.",
+            "de": "Leer lassen für jeden Kraftstoff.",
+            "es": "Déjelo vacío para cualquier carburante."
+          }
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "label": {
+            "en": "Direction",
+            "fr": "Sens",
+            "de": "Richtung",
+            "es": "Sentido"
+          },
+          "description": {
+            "en": "Leave empty for both.",
+            "fr": "Laissez vide pour les deux.",
+            "de": "Leer lassen für beide.",
+            "es": "Déjelo vacío para ambos."
+          },
+          "options": [
+            {
+              "value": "up",
+              "label": {
+                "en": "Increase",
+                "fr": "Hausse",
+                "de": "Erhöhung",
+                "es": "Subida"
+              }
+            },
+            {
+              "value": "down",
+              "label": {
+                "en": "Decrease",
+                "fr": "Baisse",
+                "de": "Senkung",
+                "es": "Bajada"
+              }
+            }
+          ],
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "station_name",
+          "type": "string",
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Tankstelle",
+            "es": "Gasolinera"
+          }
+        },
+        {
+          "key": "fuel",
+          "type": "string",
+          "label": {
+            "en": "Fuel (key)",
+            "fr": "Carburant (clé)",
+            "de": "Kraftstoff (Schlüssel)",
+            "es": "Carburante (clave)"
+          },
+          "description": {
+            "en": "diesel_b7, sp95_e10, lpg…",
+            "fr": "diesel_b7, sp95_e10, lpg…",
+            "de": "diesel_b7, sp95_e10, lpg…",
+            "es": "diesel_b7, sp95_e10, lpg…"
+          }
+        },
+        {
+          "key": "fuel_name",
+          "type": "string",
+          "label": {
+            "en": "Fuel name",
+            "fr": "Nom du carburant",
+            "de": "Name des Kraftstoffs",
+            "es": "Nombre del carburante"
+          },
+          "description": {
+            "en": "In English: “Diesel (B7)”.",
+            "fr": "En anglais : « Diesel (B7) ».",
+            "de": "Auf Englisch: „Diesel (B7)“.",
+            "es": "En inglés: «Diesel (B7)»."
+          }
+        },
+        {
+          "key": "direction",
+          "type": "string",
+          "label": {
+            "en": "Direction (up / down)",
+            "fr": "Sens (up / down)",
+            "de": "Richtung (up / down)",
+            "es": "Sentido (up / down)"
+          }
+        },
+        {
+          "key": "price",
+          "type": "number",
+          "label": {
+            "en": "Price (€/L)",
+            "fr": "Prix (€/L)",
+            "de": "Preis (€/L)",
+            "es": "Precio (€/L)"
+          }
+        },
+        {
+          "key": "previous_price",
+          "type": "number",
+          "label": {
+            "en": "Previous price (€/L)",
+            "fr": "Prix précédent (€/L)",
+            "de": "Vorheriger Preis (€/L)",
+            "es": "Precio anterior (€/L)"
+          }
+        },
+        {
+          "key": "difference",
+          "type": "number",
+          "label": {
+            "en": "Difference (€/L)",
+            "fr": "Écart (€/L)",
+            "de": "Differenz (€/L)",
+            "es": "Diferencia (€/L)"
+          }
+        },
+        {
+          "key": "brand",
+          "type": "string",
+          "label": {
+            "en": "Brand",
+            "fr": "Enseigne",
+            "de": "Marke",
+            "es": "Marca"
+          }
+        },
+        {
+          "key": "address",
+          "type": "string",
+          "label": {
+            "en": "Address",
+            "fr": "Adresse",
+            "de": "Adresse",
+            "es": "Dirección"
+          }
+        },
+        {
+          "key": "distance_km",
+          "type": "number",
+          "label": {
+            "en": "Distance from the locality centre (km)",
+            "fr": "Distance du centre de la localité (km)",
+            "de": "Entfernung vom Ortszentrum (km)",
+            "es": "Distancia al centro de la localidad (km)"
+          }
+        },
+        {
+          "key": "price_date",
+          "type": "string",
+          "label": {
+            "en": "Date of the price (YYYY-MM-DD)",
+            "fr": "Date du prix (AAAA-MM-JJ)",
+            "de": "Datum des Preises (JJJJ-MM-TT)",
+            "es": "Fecha del precio (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "map_url",
+          "type": "string",
+          "label": {
+            "en": "Map link",
+            "fr": "Lien vers la carte",
+            "de": "Kartenlink",
+            "es": "Enlace al mapa"
+          }
+        }
+      ]
+    },
+    {
+      "key": "official_price_changed",
+      "label": {
+        "en": "Carbu.com: official price changed",
+        "fr": "Carbu.com : prix officiel modifié",
+        "de": "Carbu.com: amtlicher Preis geändert",
+        "es": "Carbu.com: precio oficial modificado"
+      },
+      "description": {
+        "en": "Today’s official price of a fuel differs from yesterday’s (Belgium, Luxembourg).",
+        "fr": "Le prix officiel du jour d’un carburant diffère de celui de la veille (Belgique, Luxembourg).",
+        "de": "Der heutige amtliche Preis eines Kraftstoffs weicht von gestern ab (Belgien, Luxemburg).",
+        "es": "El precio oficial de hoy de un carburante difiere del de ayer (Bélgica, Luxemburgo)."
+      },
+      "fields": [
+        {
+          "key": "fuel",
+          "type": "select",
+          "label": {
+            "en": "Fuel",
+            "fr": "Carburant",
+            "de": "Kraftstoff",
+            "es": "Carburante"
+          },
+          "options": [
+            {
+              "value": "sp95_e10",
+              "label": {
+                "en": "Super 95 (E10)",
+                "fr": "Super 95 (E10)",
+                "de": "Super E10",
+                "es": "Gasolina 95 (E10)"
+              }
+            },
+            {
+              "value": "sp95_e5",
+              "label": {
+                "en": "Super 95 (E5)",
+                "fr": "Sans plomb 95 (E5)",
+                "de": "Super E5",
+                "es": "Gasolina 95 (E5)"
+              }
+            },
+            {
+              "value": "sp98_e5",
+              "label": {
+                "en": "Super 98 (E5)",
+                "fr": "Super 98 (E5)",
+                "de": "Super Plus 98 (E5)",
+                "es": "Gasolina 98 (E5)"
+              }
+            },
+            {
+              "value": "sp98_e10",
+              "label": {
+                "en": "Super 98 (E10)",
+                "fr": "Super 98 (E10)",
+                "de": "Super Plus 98 (E10)",
+                "es": "Gasolina 98 (E10)"
+              }
+            },
+            {
+              "value": "diesel_b7",
+              "label": {
+                "en": "Diesel (B7)",
+                "fr": "Diesel (B7)",
+                "de": "Diesel (B7)",
+                "es": "Diésel (B7)"
+              }
+            },
+            {
+              "value": "diesel_b10",
+              "label": {
+                "en": "Diesel (B10)",
+                "fr": "Diesel (B10)",
+                "de": "Diesel (B10)",
+                "es": "Diésel (B10)"
+              }
+            },
+            {
+              "value": "diesel_xtl",
+              "label": {
+                "en": "Diesel XTL / HVO",
+                "fr": "Diesel XTL / HVO",
+                "de": "Diesel XTL / HVO",
+                "es": "Diésel XTL / HVO"
+              }
+            },
+            {
+              "value": "lpg",
+              "label": {
+                "en": "LPG",
+                "fr": "GPL",
+                "de": "Autogas (LPG)",
+                "es": "GLP"
+              }
+            }
+          ],
+          "required": false,
+          "description": {
+            "en": "Leave empty for any fuel.",
+            "fr": "Laissez vide pour tous les carburants.",
+            "de": "Leer lassen für jeden Kraftstoff.",
+            "es": "Déjelo vacío para cualquier carburante."
+          }
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "label": {
+            "en": "Direction",
+            "fr": "Sens",
+            "de": "Richtung",
+            "es": "Sentido"
+          },
+          "description": {
+            "en": "Leave empty for both.",
+            "fr": "Laissez vide pour les deux.",
+            "de": "Leer lassen für beide.",
+            "es": "Déjelo vacío para ambos."
+          },
+          "options": [
+            {
+              "value": "up",
+              "label": {
+                "en": "Increase",
+                "fr": "Hausse",
+                "de": "Erhöhung",
+                "es": "Subida"
+              }
+            },
+            {
+              "value": "down",
+              "label": {
+                "en": "Decrease",
+                "fr": "Baisse",
+                "de": "Senkung",
+                "es": "Bajada"
+              }
+            }
+          ],
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "fuel",
+          "type": "string",
+          "label": {
+            "en": "Fuel (key)",
+            "fr": "Carburant (clé)",
+            "de": "Kraftstoff (Schlüssel)",
+            "es": "Carburante (clave)"
+          },
+          "description": {
+            "en": "diesel_b7, sp95_e10, lpg…",
+            "fr": "diesel_b7, sp95_e10, lpg…",
+            "de": "diesel_b7, sp95_e10, lpg…",
+            "es": "diesel_b7, sp95_e10, lpg…"
+          }
+        },
+        {
+          "key": "fuel_name",
+          "type": "string",
+          "label": {
+            "en": "Fuel name",
+            "fr": "Nom du carburant",
+            "de": "Name des Kraftstoffs",
+            "es": "Nombre del carburante"
+          },
+          "description": {
+            "en": "In English: “Diesel (B7)”.",
+            "fr": "En anglais : « Diesel (B7) ».",
+            "de": "Auf Englisch: „Diesel (B7)“.",
+            "es": "En inglés: «Diesel (B7)»."
+          }
+        },
+        {
+          "key": "country",
+          "type": "string",
+          "label": {
+            "en": "Country (BE, LU)",
+            "fr": "Pays (BE, LU)",
+            "de": "Land (BE, LU)",
+            "es": "País (BE, LU)"
+          }
+        },
+        {
+          "key": "direction",
+          "type": "string",
+          "label": {
+            "en": "Direction (up / down)",
+            "fr": "Sens (up / down)",
+            "de": "Richtung (up / down)",
+            "es": "Sentido (up / down)"
+          }
+        },
+        {
+          "key": "price",
+          "type": "number",
+          "label": {
+            "en": "Price (€/L)",
+            "fr": "Prix (€/L)",
+            "de": "Preis (€/L)",
+            "es": "Precio (€/L)"
+          }
+        },
+        {
+          "key": "previous_price",
+          "type": "number",
+          "label": {
+            "en": "Previous price (€/L)",
+            "fr": "Prix précédent (€/L)",
+            "de": "Vorheriger Preis (€/L)",
+            "es": "Precio anterior (€/L)"
+          }
+        },
+        {
+          "key": "difference",
+          "type": "number",
+          "label": {
+            "en": "Difference (€/L)",
+            "fr": "Écart (€/L)",
+            "de": "Differenz (€/L)",
+            "es": "Diferencia (€/L)"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Date (YYYY-MM-DD)",
+            "fr": "Date (AAAA-MM-JJ)",
+            "de": "Datum (JJJJ-MM-TT)",
+            "es": "Fecha (AAAA-MM-DD)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "official_price_announced",
+      "label": {
+        "en": "Carbu.com: maximum price announced",
+        "fr": "Carbu.com : prix maximum annoncé",
+        "de": "Carbu.com: Höchstpreis angekündigt",
+        "es": "Carbu.com: precio máximo anunciado"
+      },
+      "description": {
+        "en": "Belgium: the government announced a new maximum price for the next day.",
+        "fr": "Belgique : le gouvernement a annoncé un nouveau prix maximum pour le lendemain.",
+        "de": "Belgien: Die Regierung hat einen neuen Höchstpreis für den nächsten Tag angekündigt.",
+        "es": "Bélgica: el Gobierno anunció un nuevo precio máximo para el día siguiente."
+      },
+      "fields": [
+        {
+          "key": "fuel",
+          "type": "select",
+          "label": {
+            "en": "Fuel",
+            "fr": "Carburant",
+            "de": "Kraftstoff",
+            "es": "Carburante"
+          },
+          "options": [
+            {
+              "value": "sp95_e10",
+              "label": {
+                "en": "Super 95 (E10)",
+                "fr": "Super 95 (E10)",
+                "de": "Super E10",
+                "es": "Gasolina 95 (E10)"
+              }
+            },
+            {
+              "value": "sp95_e5",
+              "label": {
+                "en": "Super 95 (E5)",
+                "fr": "Sans plomb 95 (E5)",
+                "de": "Super E5",
+                "es": "Gasolina 95 (E5)"
+              }
+            },
+            {
+              "value": "sp98_e5",
+              "label": {
+                "en": "Super 98 (E5)",
+                "fr": "Super 98 (E5)",
+                "de": "Super Plus 98 (E5)",
+                "es": "Gasolina 98 (E5)"
+              }
+            },
+            {
+              "value": "sp98_e10",
+              "label": {
+                "en": "Super 98 (E10)",
+                "fr": "Super 98 (E10)",
+                "de": "Super Plus 98 (E10)",
+                "es": "Gasolina 98 (E10)"
+              }
+            },
+            {
+              "value": "diesel_b7",
+              "label": {
+                "en": "Diesel (B7)",
+                "fr": "Diesel (B7)",
+                "de": "Diesel (B7)",
+                "es": "Diésel (B7)"
+              }
+            },
+            {
+              "value": "diesel_b10",
+              "label": {
+                "en": "Diesel (B10)",
+                "fr": "Diesel (B10)",
+                "de": "Diesel (B10)",
+                "es": "Diésel (B10)"
+              }
+            },
+            {
+              "value": "diesel_xtl",
+              "label": {
+                "en": "Diesel XTL / HVO",
+                "fr": "Diesel XTL / HVO",
+                "de": "Diesel XTL / HVO",
+                "es": "Diésel XTL / HVO"
+              }
+            },
+            {
+              "value": "lpg",
+              "label": {
+                "en": "LPG",
+                "fr": "GPL",
+                "de": "Autogas (LPG)",
+                "es": "GLP"
+              }
+            }
+          ],
+          "required": false,
+          "description": {
+            "en": "Leave empty for any fuel.",
+            "fr": "Laissez vide pour tous les carburants.",
+            "de": "Leer lassen für jeden Kraftstoff.",
+            "es": "Déjelo vacío para cualquier carburante."
+          }
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "label": {
+            "en": "Direction",
+            "fr": "Sens",
+            "de": "Richtung",
+            "es": "Sentido"
+          },
+          "description": {
+            "en": "Leave empty for both.",
+            "fr": "Laissez vide pour les deux.",
+            "de": "Leer lassen für beide.",
+            "es": "Déjelo vacío para ambos."
+          },
+          "options": [
+            {
+              "value": "up",
+              "label": {
+                "en": "Increase",
+                "fr": "Hausse",
+                "de": "Erhöhung",
+                "es": "Subida"
+              }
+            },
+            {
+              "value": "down",
+              "label": {
+                "en": "Decrease",
+                "fr": "Baisse",
+                "de": "Senkung",
+                "es": "Bajada"
+              }
+            }
+          ],
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "fuel",
+          "type": "string",
+          "label": {
+            "en": "Fuel (key)",
+            "fr": "Carburant (clé)",
+            "de": "Kraftstoff (Schlüssel)",
+            "es": "Carburante (clave)"
+          },
+          "description": {
+            "en": "diesel_b7, sp95_e10, lpg…",
+            "fr": "diesel_b7, sp95_e10, lpg…",
+            "de": "diesel_b7, sp95_e10, lpg…",
+            "es": "diesel_b7, sp95_e10, lpg…"
+          }
+        },
+        {
+          "key": "fuel_name",
+          "type": "string",
+          "label": {
+            "en": "Fuel name",
+            "fr": "Nom du carburant",
+            "de": "Name des Kraftstoffs",
+            "es": "Nombre del carburante"
+          },
+          "description": {
+            "en": "In English: “Diesel (B7)”.",
+            "fr": "En anglais : « Diesel (B7) ».",
+            "de": "Auf Englisch: „Diesel (B7)“.",
+            "es": "En inglés: «Diesel (B7)»."
+          }
+        },
+        {
+          "key": "direction",
+          "type": "string",
+          "label": {
+            "en": "Direction (up / down)",
+            "fr": "Sens (up / down)",
+            "de": "Richtung (up / down)",
+            "es": "Sentido (up / down)"
+          }
+        },
+        {
+          "key": "current_price",
+          "type": "number",
+          "label": {
+            "en": "Today’s maximum price (€/L)",
+            "fr": "Prix maximum du jour (€/L)",
+            "de": "Heutiger Höchstpreis (€/L)",
+            "es": "Precio máximo de hoy (€/L)"
+          }
+        },
+        {
+          "key": "new_price",
+          "type": "number",
+          "label": {
+            "en": "New maximum price (€/L)",
+            "fr": "Nouveau prix maximum (€/L)",
+            "de": "Neuer Höchstpreis (€/L)",
+            "es": "Nuevo precio máximo (€/L)"
+          }
+        },
+        {
+          "key": "difference",
+          "type": "number",
+          "label": {
+            "en": "Difference (€/L)",
+            "fr": "Écart (€/L)",
+            "de": "Differenz (€/L)",
+            "es": "Diferencia (€/L)"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "From (YYYY-MM-DD)",
+            "fr": "À partir du (AAAA-MM-JJ)",
+            "de": "Ab (JJJJ-MM-TT)",
+            "es": "A partir del (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "date_text",
+          "type": "string",
+          "label": {
+            "en": "Date (DD/MM/YYYY)",
+            "fr": "Date (JJ/MM/AAAA)",
+            "de": "Datum (TT/MM/JJJJ)",
+            "es": "Fecha (DD/MM/AAAA)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "official_price_forecast",
+      "label": {
+        "en": "Carbu.com: maximum price change expected",
+        "fr": "Carbu.com : changement de prix maximum prévu",
+        "de": "Carbu.com: Höchstpreisänderung erwartet",
+        "es": "Carbu.com: cambio de precio máximo previsto"
+      },
+      "description": {
+        "en": "Belgium: Carbu.com expects the maximum price to rise or fall, before it is official.",
+        "fr": "Belgique : Carbu.com prévoit une hausse ou une baisse du prix maximum, avant l’annonce officielle.",
+        "de": "Belgien: Carbu.com erwartet eine Erhöhung oder Senkung des Höchstpreises vor der Ankündigung.",
+        "es": "Bélgica: Carbu.com prevé una subida o bajada del precio máximo, antes del anuncio oficial."
+      },
+      "fields": [
+        {
+          "key": "fuel",
+          "type": "select",
+          "label": {
+            "en": "Fuel",
+            "fr": "Carburant",
+            "de": "Kraftstoff",
+            "es": "Carburante"
+          },
+          "options": [
+            {
+              "value": "sp95_e10",
+              "label": {
+                "en": "Super 95 (E10)",
+                "fr": "Super 95 (E10)",
+                "de": "Super E10",
+                "es": "Gasolina 95 (E10)"
+              }
+            },
+            {
+              "value": "sp95_e5",
+              "label": {
+                "en": "Super 95 (E5)",
+                "fr": "Sans plomb 95 (E5)",
+                "de": "Super E5",
+                "es": "Gasolina 95 (E5)"
+              }
+            },
+            {
+              "value": "sp98_e5",
+              "label": {
+                "en": "Super 98 (E5)",
+                "fr": "Super 98 (E5)",
+                "de": "Super Plus 98 (E5)",
+                "es": "Gasolina 98 (E5)"
+              }
+            },
+            {
+              "value": "sp98_e10",
+              "label": {
+                "en": "Super 98 (E10)",
+                "fr": "Super 98 (E10)",
+                "de": "Super Plus 98 (E10)",
+                "es": "Gasolina 98 (E10)"
+              }
+            },
+            {
+              "value": "diesel_b7",
+              "label": {
+                "en": "Diesel (B7)",
+                "fr": "Diesel (B7)",
+                "de": "Diesel (B7)",
+                "es": "Diésel (B7)"
+              }
+            },
+            {
+              "value": "diesel_b10",
+              "label": {
+                "en": "Diesel (B10)",
+                "fr": "Diesel (B10)",
+                "de": "Diesel (B10)",
+                "es": "Diésel (B10)"
+              }
+            },
+            {
+              "value": "diesel_xtl",
+              "label": {
+                "en": "Diesel XTL / HVO",
+                "fr": "Diesel XTL / HVO",
+                "de": "Diesel XTL / HVO",
+                "es": "Diésel XTL / HVO"
+              }
+            },
+            {
+              "value": "lpg",
+              "label": {
+                "en": "LPG",
+                "fr": "GPL",
+                "de": "Autogas (LPG)",
+                "es": "GLP"
+              }
+            }
+          ],
+          "required": false,
+          "description": {
+            "en": "Leave empty for any fuel.",
+            "fr": "Laissez vide pour tous les carburants.",
+            "de": "Leer lassen für jeden Kraftstoff.",
+            "es": "Déjelo vacío para cualquier carburante."
+          }
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "label": {
+            "en": "Direction",
+            "fr": "Sens",
+            "de": "Richtung",
+            "es": "Sentido"
+          },
+          "description": {
+            "en": "Leave empty for both.",
+            "fr": "Laissez vide pour les deux.",
+            "de": "Leer lassen für beide.",
+            "es": "Déjelo vacío para ambos."
+          },
+          "options": [
+            {
+              "value": "up",
+              "label": {
+                "en": "Increase",
+                "fr": "Hausse",
+                "de": "Erhöhung",
+                "es": "Subida"
+              }
+            },
+            {
+              "value": "down",
+              "label": {
+                "en": "Decrease",
+                "fr": "Baisse",
+                "de": "Senkung",
+                "es": "Bajada"
+              }
+            }
+          ],
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "fuel",
+          "type": "string",
+          "label": {
+            "en": "Fuel (key)",
+            "fr": "Carburant (clé)",
+            "de": "Kraftstoff (Schlüssel)",
+            "es": "Carburante (clave)"
+          },
+          "description": {
+            "en": "diesel_b7, sp95_e10, lpg…",
+            "fr": "diesel_b7, sp95_e10, lpg…",
+            "de": "diesel_b7, sp95_e10, lpg…",
+            "es": "diesel_b7, sp95_e10, lpg…"
+          }
+        },
+        {
+          "key": "fuel_name",
+          "type": "string",
+          "label": {
+            "en": "Fuel name",
+            "fr": "Nom du carburant",
+            "de": "Name des Kraftstoffs",
+            "es": "Nombre del carburante"
+          },
+          "description": {
+            "en": "In English: “Diesel (B7)”.",
+            "fr": "En anglais : « Diesel (B7) ».",
+            "de": "Auf Englisch: „Diesel (B7)“.",
+            "es": "En inglés: «Diesel (B7)»."
+          }
+        },
+        {
+          "key": "direction",
+          "type": "string",
+          "label": {
+            "en": "Direction (up / down)",
+            "fr": "Sens (up / down)",
+            "de": "Richtung (up / down)",
+            "es": "Sentido (up / down)"
+          }
+        },
+        {
+          "key": "current_price",
+          "type": "number",
+          "label": {
+            "en": "Today’s maximum price (€/L)",
+            "fr": "Prix maximum du jour (€/L)",
+            "de": "Heutiger Höchstpreis (€/L)",
+            "es": "Precio máximo de hoy (€/L)"
+          }
+        },
+        {
+          "key": "expected_price",
+          "type": "number",
+          "label": {
+            "en": "Expected price (€/L), when known",
+            "fr": "Prix prévu (€/L), si connu",
+            "de": "Erwarteter Preis (€/L), falls bekannt",
+            "es": "Precio previsto (€/L), si se conoce"
+          }
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "label": {
+            "en": "Expected on (YYYY-MM-DD)",
+            "fr": "Prévu le (AAAA-MM-JJ)",
+            "de": "Erwartet am (JJJJ-MM-TT)",
+            "es": "Previsto el (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "date_text",
+          "type": "string",
+          "label": {
+            "en": "Date (DD/MM/YYYY)",
+            "fr": "Date (JJ/MM/AAAA)",
+            "de": "Datum (TT/MM/JJJJ)",
+            "es": "Fecha (DD/MM/AAAA)"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "get_cheapest_station",
+      "label": {
+        "en": "Carbu.com: cheapest station",
+        "fr": "Carbu.com : station la moins chère",
+        "de": "Carbu.com: günstigste Tankstelle",
+        "es": "Carbu.com: gasolinera más barata"
+      },
+      "description": {
+        "en": "The cheapest station of your area for a fuel, to put in a message.",
+        "fr": "La station la moins chère de votre zone pour un carburant, à mettre dans un message.",
+        "de": "Die günstigste Tankstelle Ihres Gebiets für einen Kraftstoff, für eine Nachricht.",
+        "es": "La gasolinera más barata de su zona para un carburante, para un mensaje."
+      },
+      "timeout_seconds": 60,
+      "fields": [
+        {
+          "key": "fuel",
+          "type": "select",
+          "label": {
+            "en": "Fuel",
+            "fr": "Carburant",
+            "de": "Kraftstoff",
+            "es": "Carburante"
+          },
+          "options": [
+            {
+              "value": "sp95_e10",
+              "label": {
+                "en": "Super 95 (E10) · BE FR",
+                "fr": "Super 95 (E10) · BE FR",
+                "de": "Super E10 · BE FR",
+                "es": "Gasolina 95 (E10) · BE FR"
+              }
+            },
+            {
+              "value": "sp95_e5",
+              "label": {
+                "en": "Super 95 (E5) · FR LU",
+                "fr": "Sans plomb 95 (E5) · FR LU",
+                "de": "Super E5 · FR LU",
+                "es": "Gasolina 95 (E5) · FR LU"
+              }
+            },
+            {
+              "value": "sp98_e5",
+              "label": {
+                "en": "Super 98 (E5) · BE FR LU",
+                "fr": "Super 98 (E5) · BE FR LU",
+                "de": "Super Plus 98 (E5) · BE FR LU",
+                "es": "Gasolina 98 (E5) · BE FR LU"
+              }
+            },
+            {
+              "value": "sp98_e10",
+              "label": {
+                "en": "Super 98 (E10) · BE FR LU",
+                "fr": "Super 98 (E10) · BE FR LU",
+                "de": "Super Plus 98 (E10) · BE FR LU",
+                "es": "Gasolina 98 (E10) · BE FR LU"
+              }
+            },
+            {
+              "value": "diesel_b7",
+              "label": {
+                "en": "Diesel (B7) · BE FR LU",
+                "fr": "Diesel (B7) · BE FR LU",
+                "de": "Diesel (B7) · BE FR LU",
+                "es": "Diésel (B7) · BE FR LU"
+              }
+            },
+            {
+              "value": "diesel_b10",
+              "label": {
+                "en": "Diesel (B10) · BE LU",
+                "fr": "Diesel (B10) · BE LU",
+                "de": "Diesel (B10) · BE LU",
+                "es": "Diésel (B10) · BE LU"
+              }
+            },
+            {
+              "value": "diesel_xtl",
+              "label": {
+                "en": "Diesel XTL / HVO · BE",
+                "fr": "Diesel XTL / HVO · BE",
+                "de": "Diesel XTL / HVO · BE",
+                "es": "Diésel XTL / HVO · BE"
+              }
+            },
+            {
+              "value": "diesel_plus",
+              "label": {
+                "en": "Premium diesel · BE LU",
+                "fr": "Diesel+ · BE LU",
+                "de": "Premium-Diesel · BE LU",
+                "es": "Diésel prémium · BE LU"
+              }
+            },
+            {
+              "value": "lpg",
+              "label": {
+                "en": "LPG · BE FR LU",
+                "fr": "GPL · BE FR LU",
+                "de": "Autogas (LPG) · BE FR LU",
+                "es": "GLP · BE FR LU"
+              }
+            },
+            {
+              "value": "cng",
+              "label": {
+                "en": "CNG · BE FR LU",
+                "fr": "GNV (CNG) · BE FR LU",
+                "de": "Erdgas (CNG) · BE FR LU",
+                "es": "GNC · BE FR LU"
+              }
+            },
+            {
+              "value": "e85",
+              "label": {
+                "en": "E85 · FR",
+                "fr": "Superéthanol E85 · FR",
+                "de": "E85 · FR",
+                "es": "E85 · FR"
+              }
+            }
+          ],
+          "required": true
+        },
+        {
+          "key": "max_distance",
+          "type": "number",
+          "label": {
+            "en": "Within (km)",
+            "fr": "Dans un rayon de (km)",
+            "de": "Im Umkreis von (km)",
+            "es": "En un radio de (km)"
+          },
+          "description": {
+            "en": "Empty: the radius of the configuration.",
+            "fr": "Vide : le rayon de la configuration.",
+            "de": "Leer: der Umkreis der Konfiguration.",
+            "es": "Vacío: el radio de la configuración."
+          },
+          "min": 1,
+          "max": 30,
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "key": "found",
+          "type": "boolean",
+          "label": {
+            "en": "Station found",
+            "fr": "Station trouvée",
+            "de": "Tankstelle gefunden",
+            "es": "Gasolinera encontrada"
+          }
+        },
+        {
+          "key": "station_name",
+          "type": "string",
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Tankstelle",
+            "es": "Gasolinera"
+          }
+        },
+        {
+          "key": "brand",
+          "type": "string",
+          "label": {
+            "en": "Brand",
+            "fr": "Enseigne",
+            "de": "Marke",
+            "es": "Marca"
+          }
+        },
+        {
+          "key": "address",
+          "type": "string",
+          "label": {
+            "en": "Address",
+            "fr": "Adresse",
+            "de": "Adresse",
+            "es": "Dirección"
+          }
+        },
+        {
+          "key": "price",
+          "type": "number",
+          "label": {
+            "en": "Price (€/L)",
+            "fr": "Prix (€/L)",
+            "de": "Preis (€/L)",
+            "es": "Precio (€/L)"
+          }
+        },
+        {
+          "key": "distance_km",
+          "type": "number",
+          "label": {
+            "en": "Distance from the locality centre (km)",
+            "fr": "Distance du centre de la localité (km)",
+            "de": "Entfernung vom Ortszentrum (km)",
+            "es": "Distancia al centro de la localidad (km)"
+          }
+        },
+        {
+          "key": "price_date",
+          "type": "string",
+          "label": {
+            "en": "Date of the price (YYYY-MM-DD)",
+            "fr": "Date du prix (AAAA-MM-JJ)",
+            "de": "Datum des Preises (JJJJ-MM-TT)",
+            "es": "Fecha del precio (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "average_price",
+          "type": "number",
+          "label": {
+            "en": "Average price of the area (€/L)",
+            "fr": "Prix moyen de la zone (€/L)",
+            "de": "Durchschnittspreis des Gebiets (€/L)",
+            "es": "Precio medio de la zona (€/L)"
+          }
+        },
+        {
+          "key": "station_count",
+          "type": "number",
+          "label": {
+            "en": "Stations with a recent price",
+            "fr": "Stations avec un prix récent",
+            "de": "Tankstellen mit aktuellem Preis",
+            "es": "Gasolineras con precio reciente"
+          }
+        },
+        {
+          "key": "map_url",
+          "type": "string",
+          "label": {
+            "en": "Map link",
+            "fr": "Lien vers la carte",
+            "de": "Kartenlink",
+            "es": "Enlace al mapa"
+          }
+        }
+      ]
+    },
+    {
+      "key": "get_official_prices",
+      "label": {
+        "en": "Carbu.com: official prices",
+        "fr": "Carbu.com : prix officiels",
+        "de": "Carbu.com: amtliche Preise",
+        "es": "Carbu.com: precios oficiales"
+      },
+      "description": {
+        "en": "Today’s official price of a fuel and the next one (Belgium, Luxembourg).",
+        "fr": "Le prix officiel du jour d’un carburant et le suivant (Belgique, Luxembourg).",
+        "de": "Der heutige amtliche Preis eines Kraftstoffs und der nächste (Belgien, Luxemburg).",
+        "es": "El precio oficial de hoy de un carburante y el siguiente (Bélgica, Luxemburgo)."
+      },
+      "timeout_seconds": 30,
+      "fields": [
+        {
+          "key": "fuel",
+          "type": "select",
+          "label": {
+            "en": "Fuel",
+            "fr": "Carburant",
+            "de": "Kraftstoff",
+            "es": "Carburante"
+          },
+          "options": [
+            {
+              "value": "sp95_e10",
+              "label": {
+                "en": "Super 95 (E10)",
+                "fr": "Super 95 (E10)",
+                "de": "Super E10",
+                "es": "Gasolina 95 (E10)"
+              }
+            },
+            {
+              "value": "sp95_e5",
+              "label": {
+                "en": "Super 95 (E5)",
+                "fr": "Sans plomb 95 (E5)",
+                "de": "Super E5",
+                "es": "Gasolina 95 (E5)"
+              }
+            },
+            {
+              "value": "sp98_e5",
+              "label": {
+                "en": "Super 98 (E5)",
+                "fr": "Super 98 (E5)",
+                "de": "Super Plus 98 (E5)",
+                "es": "Gasolina 98 (E5)"
+              }
+            },
+            {
+              "value": "sp98_e10",
+              "label": {
+                "en": "Super 98 (E10)",
+                "fr": "Super 98 (E10)",
+                "de": "Super Plus 98 (E10)",
+                "es": "Gasolina 98 (E10)"
+              }
+            },
+            {
+              "value": "diesel_b7",
+              "label": {
+                "en": "Diesel (B7)",
+                "fr": "Diesel (B7)",
+                "de": "Diesel (B7)",
+                "es": "Diésel (B7)"
+              }
+            },
+            {
+              "value": "diesel_b10",
+              "label": {
+                "en": "Diesel (B10)",
+                "fr": "Diesel (B10)",
+                "de": "Diesel (B10)",
+                "es": "Diésel (B10)"
+              }
+            },
+            {
+              "value": "diesel_xtl",
+              "label": {
+                "en": "Diesel XTL / HVO",
+                "fr": "Diesel XTL / HVO",
+                "de": "Diesel XTL / HVO",
+                "es": "Diésel XTL / HVO"
+              }
+            },
+            {
+              "value": "lpg",
+              "label": {
+                "en": "LPG",
+                "fr": "GPL",
+                "de": "Autogas (LPG)",
+                "es": "GLP"
+              }
+            }
+          ],
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "key": "available",
+          "type": "boolean",
+          "label": {
+            "en": "Official price available",
+            "fr": "Prix officiel disponible",
+            "de": "Amtlicher Preis verfügbar",
+            "es": "Precio oficial disponible"
+          }
+        },
+        {
+          "key": "today_price",
+          "type": "number",
+          "label": {
+            "en": "Today’s price (€/L)",
+            "fr": "Prix du jour (€/L)",
+            "de": "Heutiger Preis (€/L)",
+            "es": "Precio de hoy (€/L)"
+          }
+        },
+        {
+          "key": "next_price",
+          "type": "number",
+          "label": {
+            "en": "Next price (€/L)",
+            "fr": "Prix suivant (€/L)",
+            "de": "Nächster Preis (€/L)",
+            "es": "Precio siguiente (€/L)"
+          }
+        },
+        {
+          "key": "next_date",
+          "type": "string",
+          "label": {
+            "en": "Date of the next price (YYYY-MM-DD)",
+            "fr": "Date du prix suivant (AAAA-MM-JJ)",
+            "de": "Datum des nächsten Preises (JJJJ-MM-TT)",
+            "es": "Fecha del precio siguiente (AAAA-MM-DD)"
+          }
+        },
+        {
+          "key": "trend",
+          "type": "string",
+          "label": {
+            "en": "Trend (up, down, same, unknown)",
+            "fr": "Tendance (up, down, same, unknown)",
+            "de": "Tendenz (up, down, same, unknown)",
+            "es": "Tendencia (up, down, same, unknown)"
+          }
+        },
+        {
+          "key": "announced",
+          "type": "boolean",
+          "label": {
+            "en": "Announced by the government",
+            "fr": "Annoncé par le gouvernement",
+            "de": "Von der Regierung angekündigt",
+            "es": "Anunciado por el Gobierno"
+          }
+        }
+      ]
+    }
+  ]
+}

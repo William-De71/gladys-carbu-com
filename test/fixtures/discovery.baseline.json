@@ -1,0 +1,1208 @@
+{
+  "devices": {
+    "area": {
+      "external_id": "ext:test-integration:area:be_lg_826",
+      "should_poll": false,
+      "params": ["CARBU_COUNTRY", "CARBU_LOCALITY"],
+      "features": [
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_sp95_e10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_sp95_e10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_sp95_e10",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_sp95_e5",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_sp95_e5",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_sp95_e5",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_sp98_e5",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_sp98_e5",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_sp98_e5",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_sp98_e10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_sp98_e10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_sp98_e10",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_diesel_b7",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_diesel_b7",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_diesel_b7",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_diesel_b10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_diesel_b10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_diesel_b10",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_diesel_xtl",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_diesel_xtl",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_diesel_xtl",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_diesel_plus",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_diesel_plus",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_diesel_plus",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_lpg",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_lpg",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_lpg",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_cng",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_cng",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_cng",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:lowest_e85",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:average_e85",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:area:be_lg_826:cheapest_e85",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    },
+    "station": {
+      "external_id": "ext:test-integration:station:be-2430",
+      "should_poll": false,
+      "params": ["CARBU_COUNTRY", "CARBU_STATION_ID", "CARBU_BRAND", "CARBU_ADDRESS"],
+      "features": [
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_sp95_e10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_sp95_e5",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_sp98_e5",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_sp98_e10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_diesel_b7",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_diesel_b10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_diesel_xtl",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_diesel_plus",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_lpg",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_cng",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:be-2430:price_e85",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    },
+    "officialBE": {
+      "external_id": "ext:test-integration:official:be",
+      "should_poll": false,
+      "params": ["CARBU_COUNTRY"],
+      "features": [
+        {
+          "external_id": "ext:test-integration:official:be:today_sp95_e10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:next_sp95_e10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:outlook_sp95_e10",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:today_sp98_e5",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:next_sp98_e5",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:outlook_sp98_e5",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:today_sp98_e10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:next_sp98_e10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:outlook_sp98_e10",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:today_diesel_b7",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:next_diesel_b7",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:outlook_diesel_b7",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:today_diesel_b10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:next_diesel_b10",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:outlook_diesel_b10",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:today_diesel_xtl",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:next_diesel_xtl",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:outlook_diesel_xtl",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:today_lpg",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:next_lpg",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:be:outlook_lpg",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    },
+    "officialLU": {
+      "external_id": "ext:test-integration:official:lu",
+      "should_poll": false,
+      "params": ["CARBU_COUNTRY"],
+      "features": [
+        {
+          "external_id": "ext:test-integration:official:lu:today_sp95_e5",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:lu:today_sp98_e5",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:lu:today_diesel_b7",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:official:lu:today_lpg",
+          "category": "currency",
+          "type": "decimal",
+          "unit": "euro",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "actions": ["test_connection", "diagnostic"],
+    "config_schema": [
+      {
+        "key": "intro",
+        "type": "section"
+      },
+      {
+        "key": "country",
+        "type": "select"
+      },
+      {
+        "key": "postal_code",
+        "type": "string"
+      },
+      {
+        "key": "town",
+        "type": "string"
+      },
+      {
+        "key": "fuels",
+        "type": "multi_select"
+      },
+      {
+        "key": "filters",
+        "type": "section"
+      },
+      {
+        "key": "radius",
+        "type": "select"
+      },
+      {
+        "key": "max_age",
+        "type": "select"
+      },
+      {
+        "key": "stations",
+        "type": "select"
+      },
+      {
+        "key": "interval",
+        "type": "select"
+      },
+      {
+        "key": "language",
+        "type": "select"
+      }
+    ],
+    "scene_triggers": [
+      {
+        "key": "cheapest_station_changed",
+        "fields": [
+          {
+            "key": "fuel",
+            "options": [
+              "sp95_e10",
+              "sp95_e5",
+              "sp98_e5",
+              "sp98_e10",
+              "diesel_b7",
+              "diesel_b10",
+              "diesel_xtl",
+              "diesel_plus",
+              "lpg",
+              "cng",
+              "e85"
+            ]
+          }
+        ],
+        "variables": [
+          {
+            "key": "fuel",
+            "type": "string"
+          },
+          {
+            "key": "fuel_name",
+            "type": "string"
+          },
+          {
+            "key": "station_name",
+            "type": "string"
+          },
+          {
+            "key": "brand",
+            "type": "string"
+          },
+          {
+            "key": "address",
+            "type": "string"
+          },
+          {
+            "key": "price",
+            "type": "number"
+          },
+          {
+            "key": "distance_km",
+            "type": "number"
+          },
+          {
+            "key": "price_date",
+            "type": "string"
+          },
+          {
+            "key": "map_url",
+            "type": "string"
+          },
+          {
+            "key": "station_url",
+            "type": "string"
+          },
+          {
+            "key": "average_price",
+            "type": "number"
+          },
+          {
+            "key": "previous_station_name",
+            "type": "string"
+          },
+          {
+            "key": "previous_price",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "station_price_changed",
+        "fields": [
+          {
+            "key": "station",
+            "options": []
+          },
+          {
+            "key": "fuel",
+            "options": [
+              "sp95_e10",
+              "sp95_e5",
+              "sp98_e5",
+              "sp98_e10",
+              "diesel_b7",
+              "diesel_b10",
+              "diesel_xtl",
+              "diesel_plus",
+              "lpg",
+              "cng",
+              "e85"
+            ]
+          },
+          {
+            "key": "direction",
+            "options": ["up", "down"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "station_name",
+            "type": "string"
+          },
+          {
+            "key": "fuel",
+            "type": "string"
+          },
+          {
+            "key": "fuel_name",
+            "type": "string"
+          },
+          {
+            "key": "direction",
+            "type": "string"
+          },
+          {
+            "key": "price",
+            "type": "number"
+          },
+          {
+            "key": "previous_price",
+            "type": "number"
+          },
+          {
+            "key": "difference",
+            "type": "number"
+          },
+          {
+            "key": "brand",
+            "type": "string"
+          },
+          {
+            "key": "address",
+            "type": "string"
+          },
+          {
+            "key": "distance_km",
+            "type": "number"
+          },
+          {
+            "key": "price_date",
+            "type": "string"
+          },
+          {
+            "key": "map_url",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "official_price_changed",
+        "fields": [
+          {
+            "key": "fuel",
+            "options": [
+              "sp95_e10",
+              "sp95_e5",
+              "sp98_e5",
+              "sp98_e10",
+              "diesel_b7",
+              "diesel_b10",
+              "diesel_xtl",
+              "lpg"
+            ]
+          },
+          {
+            "key": "direction",
+            "options": ["up", "down"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "fuel",
+            "type": "string"
+          },
+          {
+            "key": "fuel_name",
+            "type": "string"
+          },
+          {
+            "key": "country",
+            "type": "string"
+          },
+          {
+            "key": "direction",
+            "type": "string"
+          },
+          {
+            "key": "price",
+            "type": "number"
+          },
+          {
+            "key": "previous_price",
+            "type": "number"
+          },
+          {
+            "key": "difference",
+            "type": "number"
+          },
+          {
+            "key": "date",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "official_price_announced",
+        "fields": [
+          {
+            "key": "fuel",
+            "options": [
+              "sp95_e10",
+              "sp95_e5",
+              "sp98_e5",
+              "sp98_e10",
+              "diesel_b7",
+              "diesel_b10",
+              "diesel_xtl",
+              "lpg"
+            ]
+          },
+          {
+            "key": "direction",
+            "options": ["up", "down"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "fuel",
+            "type": "string"
+          },
+          {
+            "key": "fuel_name",
+            "type": "string"
+          },
+          {
+            "key": "direction",
+            "type": "string"
+          },
+          {
+            "key": "current_price",
+            "type": "number"
+          },
+          {
+            "key": "new_price",
+            "type": "number"
+          },
+          {
+            "key": "difference",
+            "type": "number"
+          },
+          {
+            "key": "date",
+            "type": "string"
+          },
+          {
+            "key": "date_text",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "official_price_forecast",
+        "fields": [
+          {
+            "key": "fuel",
+            "options": [
+              "sp95_e10",
+              "sp95_e5",
+              "sp98_e5",
+              "sp98_e10",
+              "diesel_b7",
+              "diesel_b10",
+              "diesel_xtl",
+              "lpg"
+            ]
+          },
+          {
+            "key": "direction",
+            "options": ["up", "down"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "fuel",
+            "type": "string"
+          },
+          {
+            "key": "fuel_name",
+            "type": "string"
+          },
+          {
+            "key": "direction",
+            "type": "string"
+          },
+          {
+            "key": "current_price",
+            "type": "number"
+          },
+          {
+            "key": "expected_price",
+            "type": "number"
+          },
+          {
+            "key": "date",
+            "type": "string"
+          },
+          {
+            "key": "date_text",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "scene_actions": [
+      {
+        "key": "get_cheapest_station",
+        "fields": ["fuel", "max_distance"],
+        "outputs": [
+          {
+            "key": "found",
+            "type": "boolean"
+          },
+          {
+            "key": "station_name",
+            "type": "string"
+          },
+          {
+            "key": "brand",
+            "type": "string"
+          },
+          {
+            "key": "address",
+            "type": "string"
+          },
+          {
+            "key": "price",
+            "type": "number"
+          },
+          {
+            "key": "distance_km",
+            "type": "number"
+          },
+          {
+            "key": "price_date",
+            "type": "string"
+          },
+          {
+            "key": "average_price",
+            "type": "number"
+          },
+          {
+            "key": "station_count",
+            "type": "number"
+          },
+          {
+            "key": "map_url",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "get_official_prices",
+        "fields": ["fuel"],
+        "outputs": [
+          {
+            "key": "available",
+            "type": "boolean"
+          },
+          {
+            "key": "today_price",
+            "type": "number"
+          },
+          {
+            "key": "next_price",
+            "type": "number"
+          },
+          {
+            "key": "next_date",
+            "type": "string"
+          },
+          {
+            "key": "trend",
+            "type": "string"
+          },
+          {
+            "key": "announced",
+            "type": "boolean"
+          }
+        ]
+      }
+    ],
+    "widgets": [
+      {
+        "key": "cheapest_stations",
+        "settings": ["fuel", "count"],
+        "options": {
+          "fuel": [
+            "sp95_e10",
+            "sp95_e5",
+            "sp98_e5",
+            "sp98_e10",
+            "diesel_b7",
+            "diesel_b10",
+            "diesel_xtl",
+            "diesel_plus",
+            "lpg",
+            "cng",
+            "e85"
+          ]
+        }
+      },
+      {
+        "key": "price_trend",
+        "settings": ["fuel", "interval"],
+        "options": {
+          "fuel": [
+            "sp95_e10",
+            "sp95_e5",
+            "sp98_e5",
+            "sp98_e10",
+            "diesel_b7",
+            "diesel_b10",
+            "diesel_xtl",
+            "diesel_plus",
+            "lpg",
+            "cng",
+            "e85"
+          ],
+          "interval": ["last-week", "last-month", "last-three-months", "last-year"]
+        }
+      },
+      {
+        "key": "official_prices",
+        "settings": ["fuels"],
+        "options": {
+          "fuels": [
+            "sp95_e10",
+            "sp95_e5",
+            "sp98_e5",
+            "sp98_e10",
+            "diesel_b7",
+            "diesel_b10",
+            "diesel_xtl",
+            "lpg"
+          ]
+        }
+      }
+    ]
+  }
+}

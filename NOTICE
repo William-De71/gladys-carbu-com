@@ -1,0 +1,18 @@
+Gladys Carbu.com integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The fuel prices, stations, official prices and forecasts come from the public
+pages of Carbu.com (https://carbu.com), run by Fuel Media Service. The
+integration reads them as a visitor would, about once an hour, and the widgets
+show the source (Carbu.com) and the time of each reading. The files under
+test/fixtures are reduced copies of these pages, kept only to test the reading
+of their layout.
+
+The way the station lists and the forecasts of Carbu.com are read was learnt
+from the Home Assistant integrations carbu_com (myTselection) and carbu-hass
+(Michel Heusschen, MIT licence); no code was copied.
+
+This community integration is not affiliated with, endorsed or sponsored by
+Carbu.com or Fuel Media Service.

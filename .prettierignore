@@ -1,0 +1,10 @@
+node_modules/
+package-lock.json
+/data/
+*.log
+
+# Forum post drafts: pasted by hand on the forum, never committed.
+.github/forum-*.md
+
+# Real pages of carbu.com, kept as served (broken HTML included).
+test/fixtures/*.html
