@@ -10,7 +10,7 @@ C’est une intégration **cloud** : elle contacte `carbu.com` avec votre code p
 
 ## Prérequis
 
-- Gladys Assistant **5.1.1** ou plus récent.
+- Gladys Assistant **5.3.0** ou plus récent.
 - Un accès à internet. Aucun compte, aucune clé.
 
 ## Configuration

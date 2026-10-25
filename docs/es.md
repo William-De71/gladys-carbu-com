@@ -10,7 +10,7 @@ Es una integración **en la nube**: contacta con `carbu.com` con su código post
 
 ## Requisitos
 
-- Gladys Assistant **5.1.1** o posterior.
+- Gladys Assistant **5.3.0** o posterior.
 - Acceso a internet. Sin cuenta, sin clave.
 
 ## Configuración

@@ -10,7 +10,7 @@ Es ist eine **Cloud**-Integration: Sie kontaktiert `carbu.com` mit Ihrer Postlei
 
 ## Voraussetzungen
 
-- Gladys Assistant **5.1.1** oder neuer.
+- Gladys Assistant **5.3.0** oder neuer.
 - Internetzugang. Kein Konto, kein Schlüssel.
 
 ## Konfiguration

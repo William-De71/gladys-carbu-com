@@ -10,7 +10,7 @@ It is a **cloud** integration: it contacts `carbu.com` with your postal code and
 
 ## Requirements
 
-- Gladys Assistant **5.1.1** or later.
+- Gladys Assistant **5.3.0** or later.
 - Internet access. No account, no key.
 
 ## Configuration
