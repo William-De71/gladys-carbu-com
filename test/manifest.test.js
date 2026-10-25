@@ -54,7 +54,7 @@ test('declares the cloud transport only: the pages of carbu.com', () => {
 
 test('requires the Gladys of widgets and scenes; no permission', () => {
   assert.equal(manifest.gladys_version, '>=5.1.1');
-  assert.deepEqual(manifest.categories, ['energy', 'services']);
+  assert.deepEqual(manifest.categories, ['transport', 'energy']);
   for (const key of ['location', 'network_wake', 'containers', 'network_discovery', 'webhooks']) {
     assert.equal(manifest[key], undefined, key);
   }
